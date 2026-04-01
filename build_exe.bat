@@ -41,8 +41,14 @@ echo Installing PyInstaller...
 %PYTHON% -m pip install pyinstaller
 
 echo.
+echo Cleaning old build...
+if exist dist\SkennerOpt rmdir /s /q dist\SkennerOpt
+if exist build\SkennerOpt rmdir /s /q build\SkennerOpt
+if exist SkennerOpt.spec del SkennerOpt.spec
+
+echo.
 echo Building executable (this takes 1-2 minutes)...
-%PYTHON% -m PyInstaller --onedir --windowed --name "SkennerOpt" --add-data "scanner_app;scanner_app" main.py
+%PYTHON% -m PyInstaller --onedir --windowed --name "SkennerOpt" --add-data "scanner_app;scanner_app" --hidden-import PyQt6 --hidden-import PyQt6.QtWidgets --hidden-import PyQt6.QtCore --hidden-import PyQt6.QtGui --collect-all PyQt6 main.py
 
 echo.
 echo ========================================
